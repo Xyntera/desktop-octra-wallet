@@ -1,0 +1,20 @@
+name: Build Octra Wallet Windows
+on: [push]
+
+jobs:
+  build_windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Build Windows
+        run: flutter build windows --release
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: OctraWallet-Windows-Exe
+          path: build/windows/x64/runner/Release/
